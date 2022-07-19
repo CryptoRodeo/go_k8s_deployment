@@ -7,23 +7,27 @@ import (
 )
 
 type User struct {
-	Name          string
-	CurrentWeight int
-	GoalWeight    int
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	CurrentWeight int    `json:"current_weight"`
+	GoalWeight    int    `json:"goal_weight"`
 }
 
 var users = map[string]User{
 	"joey": {
+		Id:            1,
 		Name:          "Joey",
 		CurrentWeight: 180,
 		GoalWeight:    160,
 	},
 	"sandy": {
+		Id:            2,
 		Name:          "Sandy",
 		CurrentWeight: 150,
 		GoalWeight:    130,
 	},
 	"anthony": {
+		Id:            3,
 		Name:          "Anthony",
 		CurrentWeight: 200,
 		GoalWeight:    180,
