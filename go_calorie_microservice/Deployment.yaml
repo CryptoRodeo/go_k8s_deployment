@@ -18,8 +18,13 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        env:
+        - name: PORT
+          value: "8081"
+        - name: APP_NAME
+          value: "go-calorie-calc-microservice"
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
 
 ---
 
@@ -31,5 +36,5 @@ spec:
   selector:
     app: go-calorie
   ports:
-  - port: 8080
-    targetPort: 8080
+  - port: 8081
+    targetPort: 8081
