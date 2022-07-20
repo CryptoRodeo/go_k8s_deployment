@@ -3,8 +3,12 @@ module github.com/CryptoRodeo/go_k8s_deployment
 go 1.18
 
 require (
+	data v1.0.0
+	github.com/gin-gonic/gin v1.8.1
+)
+
+require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.8.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
@@ -23,3 +27,6 @@ require (
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
+
+// Grab from local dir
+replace data v1.0.0 => ./data
