@@ -38,13 +38,17 @@ var users = map[string]User{
 	},
 }
 
+var PORT string = fmt.Sprintf(":%s", getEnv("PORT", "8080"))
+var APP_NAME string = getEnv("APP_NAME", "go-users")
+var CALORIE_SERVICE = getEnv("CALORIE_SERVICE", "localhost:8081")
+
 func main() {
-	fmt.Printf("Now running %s on port %s\n", getEnv("APP_NAME", "go-users"), getEnv("PORT", "8080"))
+	fmt.Printf("Now running %s on port %s\n", APP_NAME, PORT)
 
 	r := gin.Default()
 	r.GET("/api/v1/users", getUsers)
 	r.GET("/api/v1/calorie_goals/user/:id", getUsersCalorieTargets)
-	r.Run(fmt.Sprintf(":%s", getEnv("PORT", "8080")))
+	r.Run(PORT)
 }
 
 func getEnv(key, fallback string) string {
@@ -62,26 +66,24 @@ func getUsers(c *gin.Context) {
 }
 
 func getUsersCalorieTargets(c *gin.Context) {
-	order_service_url := getEnv("ORDER", "localhost:8081")
-	resp, err := http.Get(order_service_url)
+	user_id := c.Param("id")
+	endpoint := fmt.Sprintf("http://%s/api/v1/calorie_goal/user/%s", CALORIE_SERVICE, user_id)
 
+	resp, err := http.Get(endpoint)
 	if err != nil {
 		return
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		return
 	}
 
 	var result map[string]interface{}
-
 	body_text := string(body)
-
 	json.Unmarshal([]byte(body_text), &result)
 
 	c.JSON(http.StatusOK, gin.H{
-		"calorie_targets": result,
+		"data": result,
 	})
 }
