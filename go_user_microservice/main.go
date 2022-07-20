@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,10 +39,20 @@ var users = map[string]User{
 }
 
 func main() {
+	fmt.Printf("Now running %s on port %s\n", getEnv("APP_NAME", "go-users"), getEnv("PORT", "8080"))
+
 	r := gin.Default()
-	r.GET("/users", getUsers)
-	r.GET("/user/:id/calorie_targets", getUsersCalorieTargets)
-	r.Run(":8081") // Listen and service on 0.0.0.0:8080/ping
+	r.GET("/api/v1/users", getUsers)
+	r.GET("/api/v1/calorie_goals/user/:id", getUsersCalorieTargets)
+	r.Run(fmt.Sprintf(":%s", getEnv("PORT", "8080")))
+}
+
+func getEnv(key, fallback string) string {
+	val, exists := os.LookupEnv(key)
+	if exists {
+		return val
+	}
+	return fallback
 }
 
 func getUsers(c *gin.Context) {
@@ -49,14 +61,9 @@ func getUsers(c *gin.Context) {
 	})
 }
 
-/**
-WIP, need to set up:
-- environment variables
-- other microservice
-**/
 func getUsersCalorieTargets(c *gin.Context) {
-	// Get sample data from this endpoint
-	resp, err := http.Get("https://jsonplaceholder.typicode.com/posts/1")
+	order_service_url := getEnv("ORDER", "localhost:8081")
+	resp, err := http.Get(order_service_url)
 
 	if err != nil {
 		return
