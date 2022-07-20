@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,19 +20,19 @@ var calories = []UserCalories{
 	{2, 1500},
 	{3, 20000},
 }
+var PORT string = fmt.Sprintf(":%s", getEnv("PORT", "8081"))
+var APP_NAME string = getEnv("APP_NAME", "go-calorie-calc")
 
 func main() {
+	fmt.Printf("Now running %s on port %s\n", APP_NAME, PORT)
+
 	r := gin.Default()
-	r.GET("/caloric_goal/user/:user_id", getUserCaloricGoal)
-	r.Run(":8080") // Listen and service on 0.0.0.0:8080/ping
+	r.GET("/api/v1/calorie_goal/user/:user_id", getUserCaloricGoal)
+	r.Run(PORT)
 }
 
 func getUserCaloricGoal(c *gin.Context) {
-	_id := c.Param("user_id")
-	fmt.Println("id from query => ", _id)
-
-	user_id, err := strconv.Atoi(_id)
-	fmt.Println("ID => ", user_id)
+	user_id, err := strconv.Atoi(c.Param("user_id"))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -40,17 +41,19 @@ func getUserCaloricGoal(c *gin.Context) {
 		return
 	}
 
-	goals, exists := findUserCalorieGoal(user_id)
+	goal, exists := findUserCalorieGoal(user_id)
 
 	if !exists {
+		error_msg := fmt.Sprintf("Caloric goal does not exist for user with ID %d", user_id)
+
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Caloric goal does not exist for user with id:": user_id,
+			"Error": error_msg,
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"goal_for_user": goals,
+		"calorie_goal": goal,
 	})
 }
 
@@ -61,4 +64,12 @@ func findUserCalorieGoal(user_id int) (goal int, exists bool) {
 		}
 	}
 	return 0, false
+}
+
+func getEnv(key, fallback string) string {
+	val, exists := os.LookupEnv(key)
+	if exists {
+		return val
+	}
+	return fallback
 }
