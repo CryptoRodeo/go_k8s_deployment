@@ -13,13 +13,21 @@ spec:
     spec:
       containers:
       - name: go-users
-        image: kilgorevonnegut/go-user-microservice:v3
+        image: kilgorevonnegut/go-user-microservice:v5
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        env:
+        - name: ORDER_SERVICE
+          value: "order"
+        - name: PORT
+          value: "8080"
+        - name: APP_NAME
+          value: "go-users-microservice"
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
 
 ---
 
@@ -31,6 +39,6 @@ spec:
   selector:
     app: go-users
   ports:
-  - port: 8081
-    targetPort: 8081
+  - port: 8080
+    targetPort: 8080
 
