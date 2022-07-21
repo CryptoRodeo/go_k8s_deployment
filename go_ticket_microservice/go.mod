@@ -1,4 +1,4 @@
-module github.com/CryptoRodeo/go_k8s_deployment/tickets
+module go_ticket_microservice
 
 go 1.18
 

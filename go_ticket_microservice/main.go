@@ -6,7 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/CryptoRodeo/go_k8s_deployment/tickets/data"
+	"go_ticket_microservice/data"
+
 	"github.com/gin-gonic/gin"
 )
 
