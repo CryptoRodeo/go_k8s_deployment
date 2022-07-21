@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"data"
+	"github.com/CryptoRodeo/go_k8s_deployment/data"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,11 +45,17 @@ func getUsersTickets(c *gin.Context) {
 
 	resp, err := http.Get(endpoint)
 	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
 		return
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
 		return
 	}
 
