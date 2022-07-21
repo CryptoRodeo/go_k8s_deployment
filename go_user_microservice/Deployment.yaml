@@ -13,19 +13,19 @@ spec:
     spec:
       containers:
       - name: go-users
-        image: kilgorevonnegut/go-user-microservice:v5
+        image: kilgorevonnegut/go-user-microservice:v1
         imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         env:
-        - name: TICKET_SERVICE
-          value: "go-ticket-svc" #k8s will find the service with this name and use its IP address
         - name: PORT
           value: "8080"
         - name: APP_NAME
           value: "go-users-microservice"
+        - name: TICKET_SERVICE
+          value: "go-ticket" #k8s will find the service with this name and use its IP address
         ports:
         - containerPort: 8080
 
@@ -34,11 +34,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-users-svc
+  name: go-users
 spec:
+  type: ClusterIP
   selector:
     app: go-users
   ports:
-  - port: 8080
+  - port: 80
     targetPort: 8080
 
