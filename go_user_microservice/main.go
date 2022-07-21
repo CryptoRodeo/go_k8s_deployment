@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/CryptoRodeo/go_k8s_deployment/data"
+	"go_users_microservice/data"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,4 +1,4 @@
-module github.com/CryptoRodeo/go_k8s_deployment
+module go_users_microservice
 
 go 1.18
 
