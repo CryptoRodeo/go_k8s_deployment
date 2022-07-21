@@ -14,6 +14,7 @@ spec:
       containers:
       - name: go-ticket
         image: kilgorevonnegut/go-ticket-microservice:v1
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
@@ -31,10 +32,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-ticket-svc
+  name: go-ticket
 spec:
+  type: ClusterIP
   selector:
     app: go-ticket
   ports:
-  - port: 8081
+  - port: 80
     targetPort: 8081
