@@ -9,6 +9,7 @@ import (
 
 	"go_users_microservice/data"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +21,15 @@ func main() {
 	fmt.Printf("Now running %s on port %s\n", APP_NAME, PORT)
 
 	r := gin.Default()
+
+	// Allow requests to come from any origin.
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET"},
+		AllowHeaders:     []string{"Origin", "Content-Type"},
+		AllowCredentials: true,
+	}))
+
 	r.GET("/api/v1/users", getUsers)
 	r.GET("/api/v1/user/:id/tickets", getUsersTickets)
 	r.Run(PORT)
