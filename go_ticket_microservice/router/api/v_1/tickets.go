@@ -12,7 +12,7 @@ import (
 )
 
 type Params struct {
-	TicketIds []int `json:"tickets" binding:"required"`
+	TicketIds []int `json:"ids" binding:"required"`
 }
 
 func GetAllTickets(c *gin.Context) {
@@ -61,6 +61,7 @@ func SearchTickets(c *gin.Context) {
 
 	params := Params{}
 	json.Unmarshal([]byte(request_body), &params)
+	fmt.Println(params.TicketIds)
 	ticketsFound := ticket_service.SearchTickets(params.TicketIds)
 
 	c.JSON(http.StatusOK, gin.H{
