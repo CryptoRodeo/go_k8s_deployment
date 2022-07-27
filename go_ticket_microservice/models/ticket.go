@@ -15,13 +15,13 @@ func ExistsByID(id int) bool {
 	return false
 }
 
-func GetTicket(id int) (*Ticket, bool) {
+func GetTicket(id int) *Ticket {
 	for _, ticket := range fakeTicketDB() {
 		if ticket.Id == id {
-			return &ticket, true
+			return &ticket
 		}
 	}
-	return nil, false
+	return nil
 }
 
 func GetTicketsByID(ids []int) []*Ticket {
