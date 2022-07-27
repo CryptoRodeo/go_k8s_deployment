@@ -1,34 +1,27 @@
 package main
 
 import (
-	"fmt"
+	"go_ticket_microservice/router"
+	"go_ticket_microservice/utils/settings"
 	"log"
 	"net/http"
-	"os"
-
-	"go_ticket_microservice/router"
 )
 
-var PORT string = fmt.Sprintf(":%s", getEnv("PORT", "8081"))
-var APP_NAME string = getEnv("APP_NAME", "go-ticket")
+func init() {
+	settings.Setup()
+}
 
 func main() {
-
 	routersInit := router.InitRouter()
 
+	port := settings.ServerSettings.Port
+	appName := settings.ServerSettings.AppName
+
 	server := &http.Server{
-		Addr:    PORT,
+		Addr:    port,
 		Handler: routersInit,
 	}
 
-	log.Printf("[info] starting HTTP server, listening on port %s", PORT)
+	log.Printf("[info] starting HTTP server for %s, listening on port %s", appName, port)
 	server.ListenAndServe()
-}
-
-func getEnv(key, fallback string) string {
-	val, exists := os.LookupEnv(key)
-	if exists {
-		return val
-	}
-	return fallback
 }
