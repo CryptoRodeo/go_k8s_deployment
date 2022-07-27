@@ -53,7 +53,16 @@ func getUsersTickets(c *gin.Context) {
 	user_id := c.Param("id")
 	endpoint := fmt.Sprintf("http://%s/api/v1/tickets/user/%s", TICKET_SERVICE, user_id)
 
-	resp, err := http.Get(endpoint)
+	user, exists := getUserByID(user_id)
+
+	if !exists {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": fmt.Sprintf("User at ID: ", user_id, " does not exists."),
+		})
+	}
+
+	resp, err := http.NewRequest("GET", endpoint, user.Tickets)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err,
@@ -76,4 +85,13 @@ func getUsersTickets(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": result,
 	})
+}
+
+func getUserByID(user_id int) (data.User, bool) {
+	for _, user := range data.USERS {
+		if user.Id == user_id {
+			return user, true
+		}
+	}
+	return nil, false
 }
