@@ -1,7 +1,7 @@
 package models
 
 type Ticket struct {
-	Id          int    `json:"ticket_id"`
+	Id          int    `json:"id"`
 	Description string `json:"description"`
 	IsUrgent    bool   `json:"is_urgent"`
 }
@@ -24,11 +24,11 @@ func GetTicket(id int) *Ticket {
 	return nil
 }
 
-func GetTicketsByID(ids []int) []*Ticket {
-	temp := []*Ticket{}
+func GetTicketsByID(ids []int) []Ticket {
+	temp := []Ticket{}
 	for _, ticket := range fakeTicketDB() {
 		if inIdList(ids, ticket.Id) {
-			temp = append(temp, &ticket)
+			temp = append(temp, ticket)
 		}
 	}
 	return temp

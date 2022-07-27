@@ -12,7 +12,7 @@ func GetTicketByID(id int) *models.Ticket {
 	return models.GetTicket(id)
 }
 
-func SearchTickets(ids []int) []*models.Ticket {
+func SearchTickets(ids []int) []models.Ticket {
 	return models.GetTicketsByID(ids)
 }
 
