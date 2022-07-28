@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_user_microservice/service/user_service"
-	"go_user_microservice/service/util/settings"
+	"go_user_microservice/utils/settings"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -18,7 +18,7 @@ type Params struct {
 }
 
 func GetAllUsers(c *gin.Context) {
-	users := user_service.GetAllUSers()
+	users := user_service.GetAllUsers()
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": users,
