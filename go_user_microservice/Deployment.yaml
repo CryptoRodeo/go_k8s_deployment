@@ -26,6 +26,8 @@ spec:
           value: "go-users-microservice"
         - name: TICKET_SERVICE
           value: "go-ticket" #k8s will find the service with this name and use its IP address
+        - name: FRONT_END_ENDPOINT
+          value: "http://localhost:3000"
         ports:
         - containerPort: 8080
 
