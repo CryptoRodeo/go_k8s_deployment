@@ -2,7 +2,9 @@ package router
 
 import (
 	"go_user_microservice/router/api/v_1"
+	"go_user_microservice/utils/settings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,6 +12,7 @@ func Init() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.Use(cors.New(settings.Cors))
 
 	apiv1 := r.Group("/api/v1")
 	{
