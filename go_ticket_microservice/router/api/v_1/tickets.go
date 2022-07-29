@@ -50,7 +50,6 @@ func GetTicket(c *gin.Context) {
 
 func SearchTickets(c *gin.Context) {
 	jsonData, err := ioutil.ReadAll(c.Request.Body)
-	request_body := string(jsonData)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -60,7 +59,7 @@ func SearchTickets(c *gin.Context) {
 	}
 
 	params := Params{}
-	json.Unmarshal([]byte(request_body), &params)
+	json.Unmarshal(jsonData, &params)
 
 	ticketsFound := ticket_service.SearchTickets(params.TicketIds)
 
