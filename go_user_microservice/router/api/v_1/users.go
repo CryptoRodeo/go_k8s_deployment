@@ -1,6 +1,7 @@
 package v_1
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"go_user_microservice/service/user_service"
@@ -12,9 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Params struct {
-	UserIds   []int `json:"ids"`
-	TicketIds []int `json:"ticket_ids"`
+type UserParams struct {
+	Ids []int `json:"ids"`
 }
 
 func GetAllUsers(c *gin.Context) {
@@ -25,7 +25,7 @@ func GetAllUsers(c *gin.Context) {
 	})
 }
 
-func GetUser(c *gin.Context) {
+func GetUserByID(c *gin.Context) {
 	_id := c.Param("id")
 
 	id, err := strconv.Atoi(_id)
@@ -60,15 +60,18 @@ func SearchUsers(c *gin.Context) {
 		return
 	}
 
-	params := Params{}
+	params := UserParams{}
 	json.Unmarshal([]byte(jsonData), &params)
-	fmt.Println(params.UserIds)
 
-	usersFound := user_service.SearchUsers(params.UserIds)
+	usersFound := user_service.SearchUsers(params.Ids)
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": usersFound,
 	})
+}
+
+type TicketParams struct {
+	TicketIds []int `json:"ticket_ids"`
 }
 
 func GetUsersTickets(c *gin.Context) {
@@ -88,7 +91,24 @@ func GetUsersTickets(c *gin.Context) {
 		})
 	}
 
-	resp, err := http.NewRequest("GET", endpoint, user.Tickets)
+	jsonData := map[string][]int{
+		"ticket_ids": user.Tickets,
+	}
+
+	jsonValue, _ := json.Marshal(jsonData)
+	// Create new client, build the request.
+	cl := &http.Client{}
+	req, err := http.NewRequest(http.MethodGet, endpoint, bytes.NewBuffer(jsonValue))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
+		return
+	}
+	// add header, make request.
+	req.Header.Add("Accept", `application/json`)
+	resp, err := cl.Do(req)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -97,7 +117,16 @@ func GetUsersTickets(c *gin.Context) {
 		return
 	}
 
+	/**
+	notes on resp.body:
+		- don't close the body until we return from the function.
+		- resp.Body is a stream of data read by the http client.
+		- Do not forget to add this closing instruction,
+		  otherwise, the client might not reuse a potential persistent connection to the server
+	**/
+	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err,
@@ -109,7 +138,5 @@ func GetUsersTickets(c *gin.Context) {
 	body_text := string(body)
 	json.Unmarshal([]byte(body_text), &result)
 
-	c.JSON(http.StatusOK, gin.H{
-		"data": result,
-	})
+	c.JSON(http.StatusOK, result)
 }
