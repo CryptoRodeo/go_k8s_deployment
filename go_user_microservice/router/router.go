@@ -18,8 +18,7 @@ func Init() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		apiv1.GET("/users", v_1.GetAllUsers)
-		apiv1.GET("/users/:id", v_1.GetUserByID)
-		// apiv1.GET("/user/search", v_1.GetUsersByID)
+		apiv1.GET("/user/:id", v_1.GetUserByID)
 		apiv1.GET("/users/:id/tickets", v_1.GetUsersTickets)
 	}
 
