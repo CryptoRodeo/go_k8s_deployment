@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go_user_microservice/service/user_service"
 	"go_user_microservice/utils/settings"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -14,7 +15,7 @@ import (
 )
 
 type UserParams struct {
-	Ids []int `json:"ids"`
+	Ids []int `json:"ids" binding:"required"`
 }
 
 func GetAllUsers(c *gin.Context) {
@@ -32,8 +33,9 @@ func GetUserByID(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
+			"error": "Invalid 'id' value passed.",
 		})
+		return
 	}
 
 	if !user_service.ExistsByID(id) {
@@ -76,29 +78,7 @@ type TicketParams struct {
 
 func GetUsersTickets(c *gin.Context) {
 	endpoint := (settings.ServiceEndpoints["ticket-service"] + "/search")
-	_id := c.Param("id")
-	id, err := strconv.Atoi(_id)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
-		})
-	}
-	user := user_service.GetUserByID(id)
-	if user == nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": fmt.Sprintf("User at ID: ", id, " does not exists."),
-		})
-	}
-
-	jsonData := map[string][]int{
-		"ticket_ids": user.Tickets,
-	}
-
-	jsonValue, _ := json.Marshal(jsonData)
-	// Create new client, build the request.
-	cl := &http.Client{}
-	req, err := http.NewRequest(http.MethodGet, endpoint, bytes.NewBuffer(jsonValue))
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -106,9 +86,28 @@ func GetUsersTickets(c *gin.Context) {
 		})
 		return
 	}
-	// add header, make request.
-	req.Header.Add("Accept", `application/json`)
-	resp, err := cl.Do(req)
+
+	user := user_service.GetUserByID(id)
+	if user == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": fmt.Sprintf("User at ID: %d does not exists.", id),
+		})
+		return
+	}
+
+	jsonData := map[string][]int{
+		"ticket_ids": user.Tickets,
+	}
+
+	req_body, _ := json.Marshal(jsonData)
+	resp, err := MakeRequest(http.MethodGet, endpoint, bytes.NewBuffer(req_body))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
+		return
+	}
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -139,4 +138,21 @@ func GetUsersTickets(c *gin.Context) {
 	json.Unmarshal([]byte(body_text), &result)
 
 	c.JSON(http.StatusOK, result)
+}
+
+// Wrapper for Http#NewRequest
+func MakeRequest(method string, url string, body io.Reader) (*http.Response, error) {
+	// Create new client, build the request.
+	cl := &http.Client{}
+	req, err := http.NewRequest(method, url, body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// add header, make request.
+	req.Header.Add("Accept", `application/json`)
+	resp, err := cl.Do(req)
+
+	return resp, err
 }
