@@ -12,10 +12,6 @@ func GetUserByID(id int) *models.User {
 	return models.GetUser(id)
 }
 
-func SearchUsers(ids []int) []models.User {
-	return models.GetUsersByID(ids)
-}
-
 func ExistsByID(id int) bool {
 	return models.ExistsByID(id)
 }
