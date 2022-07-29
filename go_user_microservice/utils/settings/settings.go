@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/gin-contrib/cors"
 )
 
 var ServicePorts = map[string]string{
@@ -36,7 +38,7 @@ type CorsConfig struct {
 
 var ServerSettings = &AppSettings{}
 
-var Cors = &CorsConfig{}
+var Cors = cors.Config{}
 
 func Setup() {
 	// SERVER
