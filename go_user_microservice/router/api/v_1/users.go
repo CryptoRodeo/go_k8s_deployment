@@ -14,8 +14,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserParams struct {
-	Ids []int `json:"ids" binding:"required"`
+type Params struct {
+	Ids       []int `json:"ids" binding:"required"`
+	TicketIds []int `json:"ticket_ids"`
 }
 
 func GetAllUsers(c *gin.Context) {
@@ -51,10 +52,6 @@ func GetUserByID(c *gin.Context) {
 	})
 }
 
-type TicketParams struct {
-	TicketIds []int `json:"ticket_ids"`
-}
-
 func GetUsersTickets(c *gin.Context) {
 	endpoint := (settings.ServiceEndpoints["ticket-service"] + "/search")
 	id, err := strconv.Atoi(c.Param("id"))
@@ -74,19 +71,11 @@ func GetUsersTickets(c *gin.Context) {
 		return
 	}
 
-	jsonData := map[string][]int{
+	req_body := createParams(map[string]interface{}{
 		"ticket_ids": user.Tickets,
-	}
+	})
 
-	req_body, _ := json.Marshal(jsonData)
-	resp, err := MakeRequest(http.MethodGet, endpoint, bytes.NewBuffer(req_body))
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
-		})
-		return
-	}
+	resp, err := MakeRequest(http.MethodGet, endpoint, req_body)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -112,10 +101,7 @@ func GetUsersTickets(c *gin.Context) {
 		return
 	}
 
-	var result map[string]interface{}
-	body_text := string(body)
-	json.Unmarshal([]byte(body_text), &result)
-
+	result := extractResponse(body)
 	c.JSON(http.StatusOK, result)
 }
 
@@ -134,4 +120,15 @@ func MakeRequest(method string, url string, body io.Reader) (*http.Response, err
 	resp, err := cl.Do(req)
 
 	return resp, err
+}
+
+func createParams(data map[string]interface{}) io.Reader {
+	req_body, _ := json.Marshal(data)
+	return bytes.NewBuffer(req_body)
+}
+
+func extractResponse(jsonData []byte) map[string]interface{} {
+	var res map[string]interface{}
+	json.Unmarshal(jsonData, &res)
+	return res
 }
