@@ -58,12 +58,16 @@ func SearchTickets(c *gin.Context) {
 		return
 	}
 
-	params := Params{}
-	json.Unmarshal(jsonData, &params)
-
+	params := extractParams(jsonData)
 	ticketsFound := ticket_service.SearchTickets(params.TicketIds)
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": ticketsFound,
 	})
+}
+
+func extractParams(jsonData []byte) Params {
+	res := Params{}
+	json.Unmarshal(jsonData, &res)
+	return res
 }
