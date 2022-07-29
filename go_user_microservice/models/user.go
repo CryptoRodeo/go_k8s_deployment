@@ -25,28 +25,8 @@ func GetUser(id int) *User {
 	return nil
 }
 
-func GetUsersByID(ids []int) []User {
-	temp := []User{}
-
-	for _, user := range fakeUserDB() {
-		if inIdList(ids, user.Id) {
-			temp = append(temp, user)
-		}
-	}
-	return temp
-}
-
 func GetAllUsers() []User {
 	return fakeUserDB()
-}
-
-func inIdList(list []int, val int) bool {
-	for _, list_val := range list {
-		if list_val == val {
-			return true
-		}
-	}
-	return false
 }
 
 func fakeUserDB() []User {
