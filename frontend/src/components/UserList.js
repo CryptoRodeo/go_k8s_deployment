@@ -1,3 +1,4 @@
+import './UserList.scss';
 import React, { useState, useEffect } from 'react';
 import User from './User';
 import UserService from '../services/UserService';
@@ -19,10 +20,11 @@ export default function UserList() {
 	}
 	
 	return (
-		<div>
-			<ul>
+		<div className="container">
+			<div className="users-list">
 				{users.map(user => (<User key={user.id} {...user} />))}
-			</ul>
+			</div>
 		</div>
+
 	)
 }
