@@ -51,27 +51,6 @@ func GetUserByID(c *gin.Context) {
 	})
 }
 
-func SearchUsers(c *gin.Context) {
-	jsonData, err := ioutil.ReadAll(c.Request.Body)
-	//request_body := string(jsonData)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
-		})
-		return
-	}
-
-	params := UserParams{}
-	json.Unmarshal([]byte(jsonData), &params)
-
-	usersFound := user_service.SearchUsers(params.Ids)
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": usersFound,
-	})
-}
-
 type TicketParams struct {
 	TicketIds []int `json:"ticket_ids"`
 }
