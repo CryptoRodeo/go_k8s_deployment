@@ -29,13 +29,6 @@ type AppSettings struct {
 	AllowCredentials bool
 }
 
-type CorsConfig struct {
-	AllowOrigins     []string
-	AllowMethods     []string
-	AllowHeaders     []string
-	AllowCredentials bool
-}
-
 var ServerSettings = &AppSettings{}
 
 var Cors = cors.Config{}
