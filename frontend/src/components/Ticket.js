@@ -11,7 +11,7 @@ export default function Ticket(props) {
 		<div className="section ticket-section has-background-white">
 			<div className="columns">
 				<div className="column is-three-quarters">
-					<h2 className="title is-3">Info:</h2> 
+					<h2 className="title is-3">Info:</h2>
 					<p>{ticket.description}</p>
 				</div>
 			</div>

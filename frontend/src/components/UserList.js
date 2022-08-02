@@ -18,7 +18,7 @@ export default function UserList() {
 	if (!users) {
 		return <div>Loading...</div>
 	}
-	
+
 	return (
 		<div className="container">
 			<div className="users-list">

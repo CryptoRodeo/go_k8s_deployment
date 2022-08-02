@@ -1,6 +1,6 @@
 
 /**
- * 
+ *
  * @param {*} stateCb React hook state callback
  * @param {*} errorCb  React hook error callback
  */
@@ -14,11 +14,11 @@ async function getUsers(stateCb, errorCb) {
 			}
 		})
 		.then(res => res.json())
-		.then((res) => stateCb(res.data), (err) => errorCb(err)) 
+		.then((res) => stateCb(res.data), (err) => errorCb(err))
 }
 
 /**
- * 
+ *
  * @param {*} user_id int
  * @param {*} errorCb React hook error callback
  */

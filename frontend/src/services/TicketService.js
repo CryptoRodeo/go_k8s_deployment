@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {*} stateCb React hook state callback
  * @param {*} errorCb  React hook error callback
  */
