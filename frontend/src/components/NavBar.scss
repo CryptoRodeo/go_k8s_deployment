@@ -1,0 +1,28 @@
+nav.navbar {
+	background-color: #151515 !important;
+	min-height: 70px;
+	height: 70px;
+
+	& > div.navbar-brand {
+		height: inherit;
+		margin-left: 0 !important;
+		& > * {
+			height: inherit;
+		}
+
+		& > a.navbar-burger {
+			margin-left: 0;
+			display: inline-block;
+			width: 70px;	
+			color: hsl(0, 0%, 96%);
+
+			&:hover {
+				color: hsl(0, 0%, 100%);
+			}
+
+			& > span.burger-line {
+				height: 2px;
+			}
+		}
+	}
+}
