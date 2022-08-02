@@ -8,7 +8,7 @@ export default function NavBar(props) {
 					<span aria-hidden="false" className="burger-line"></span>
 					<span aria-hidden="false" className="burger-line"></span>
 					<span aria-hidden="false" className="burger-line"></span>
-   	 		</a>
+				</a>
 				<a className="navbar-item" href="#">
 					<h1 className="title has-text-primary">TicketMaster</h1>
 				</a>
