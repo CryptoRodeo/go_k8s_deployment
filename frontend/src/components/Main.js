@@ -1,6 +1,5 @@
 import './Main.scss'
-import React, { useState, useEffect } from 'react';
-import NavBar from './NavBar';
+import React from 'react';
 import TicketList from './TicketList';
 import Menu from './Menu';
 
