@@ -1,16 +1,13 @@
 import logo from './logo.svg';
 import './App.scss';
-import TicketList from './components/TicketList';
-import Header from './components/Header';
 import NavBar from './components/NavBar';
-import Menu from './components/Menu';
+import Main from './components/Main';
 
 function App() {
   return (
     <div className="App container is-fullhd has-background-light">
-    <NavBar/>
-    <Menu />
-    <TicketList/>
+      <NavBar/>
+      <Main />
     </div>
   );
 }
