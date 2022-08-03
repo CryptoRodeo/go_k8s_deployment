@@ -3,7 +3,7 @@ import './Menu.scss';
 
 export default function Menu(props) {
 	return (
-	<aside className="menu">
+	<aside className="menu" id="menuSection">
  		<p className="menu-label">
  		  General
  		</p>
