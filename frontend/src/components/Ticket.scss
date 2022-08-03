@@ -1,3 +1,5 @@
 div.ticket-section {
-	border-bottom: solid 1px black;
+	> div.card-content {
+		margin-bottom: 1rem;
+	}
 }

@@ -8,11 +8,12 @@ export default function Ticket(props) {
 	}, [props]);
 
 	return (
-		<div className="section ticket-section has-background-white">
-			<div className="columns">
-				<div className="column is-three-quarters">
-					<h2 className="title is-3">Info:</h2>
-					<p>{ticket.description}</p>
+		<div className="card ticket-section has-background-white">
+			<div className="card-content">
+				<div className="">
+					<h2 className="title">{ticket.description}</h2>
+					<h2 className="subtitle">ID: {ticket.id}</h2>
+					<span className={ticket.is_urgent ? 'tag is-danger' : 'tag is-light'}>{ticket.is_urgent ? 'Urgent!' : 'Regular'}</span>
 				</div>
 			</div>
 		</div>
