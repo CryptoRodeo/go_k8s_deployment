@@ -1,4 +1,3 @@
-
 /**
  *
  * @param {*} stateCb React hook state callback
@@ -53,8 +52,10 @@ async function getUserByID(user_id, stateCb, errorCb) {
 	.then((res) => stateCb(res.data), (err) => errorCb(err))
 }
 
-export default {
+const UserService = {
 	getUsers,
 	getUserByID,
 	getUserTickets,
-}
+};
+
+export default UserService;
