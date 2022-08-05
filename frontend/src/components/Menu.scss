@@ -1,0 +1,26 @@
+aside.menu {
+	max-width: 300px;
+	min-height: 100vh;
+	padding-top: 1rem;
+	background-color: #212427;
+	box-shadow: 0.75rem 0 0.75rem -0.5rem rgba(3, 3, 3, 0.18);
+	font-size: 1.2rem;
+
+	& > p.menu-label {
+		color: hsl(0, 0%, 100%);
+		padding-left: 1rem;
+		font-size: 1rem;
+	}
+
+	& > ul.menu-list  {
+		& > li.menu-item a {
+			color: hsl(0, 0%, 100%);
+			padding-left: 1rem;
+
+			&:hover {
+				background-color: #4f5255;
+				color: hsl(0, 0%, 100%);
+			}
+		}
+	}
+}
