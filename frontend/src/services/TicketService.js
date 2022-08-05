@@ -15,6 +15,8 @@ async function getTickets(stateCb, errorCb) {
 	.then((res) => stateCb(res.data), (err) => errorCb(err))
 }
 
-export default {
+const TicketService = {
 	getTickets,
 }
+
+export default TicketService;
