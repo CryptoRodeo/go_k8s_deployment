@@ -9,7 +9,7 @@ export default function Menu(props) {
  		</p>
  		<ul className="menu-list">
  		  <li className="menu-item"><a href="/">Tickets</a></li>
- 		  <li className="menu-item"><a href="/">Users</a></li>
+ 		  <li className="menu-item"><a href="/users">Users</a></li>
  		</ul>
  		<p className="menu-label">
  		  Other
