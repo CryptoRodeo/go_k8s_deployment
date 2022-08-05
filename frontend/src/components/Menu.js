@@ -15,7 +15,7 @@ export default function Menu(props) {
  		  Other
  		</p>
  		<ul className="menu-list">
- 		  <li className="menu-item"><a href="/">Source Code</a></li>
+ 		  <li className="menu-item"><a href="https://github.com/CryptoRodeo/go_k8s_deployment">Source Code</a></li>
  		</ul>
 	</aside>
 	)
