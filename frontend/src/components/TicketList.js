@@ -15,9 +15,9 @@ export default function TicketList() {
 		console.error(error);
 	}
 
-	if (!tickets) {
+	if (!tickets.length) {
 		return (
-			<div>Loading...</div>
+			<div className="container ticket-list">Loading...</div>
 		);
 	}
 
