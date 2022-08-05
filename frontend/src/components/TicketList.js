@@ -3,13 +3,21 @@ import React, { useState, useEffect } from 'react';
 import Ticket from './Ticket';
 import TicketService from '../services/TicketService';
 
-export default function TicketList() {
+export default function TicketList(props) {
 	const [error, setError] = useState(null)
 	const [tickets, setTickets] = useState([]);
 
 	useEffect(() => {
-		TicketService.getTickets(setTickets, setError)
-	}, []);
+		// If we explicitly pass tickets, just render them
+		if (props.tickets) {
+			setTickets(props.tickets);
+		}
+		else {
+			// else, use the service.
+			TicketService.getTickets(setTickets, setError);
+		}
+	}, [props.tickets]);
+
 
 	if (error) {
 		console.error(error);
