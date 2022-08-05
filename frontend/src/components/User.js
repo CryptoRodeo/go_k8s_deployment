@@ -3,7 +3,7 @@ import "./User.scss";
 
 export default function User(props) {
 	const [user, setUser] = useState(props)
-	const userTicketLink = `${user.id}/tickets`;
+	const userTicketLink = `user/${user.id}/tickets`;
 
 	useEffect(() => {
 		setUser(user);
