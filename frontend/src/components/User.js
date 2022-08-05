@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import "./User.scss";
+
 export default function User(props) {
 	const [user, setUser] = useState(props)
+	const userTicketLink = `${user.id}/tickets`;
 
 	useEffect(() => {
 		setUser(user);
 	}, [props]);
 
-
 	return (
-		<div className="section ticket-section">
-			<div className="columns">
-				<div className="column is-one-quarter">
-					<h2 className="title is-3">{user.name}</h2>
-					<p className="subtitle is-6">Role: {user.role}</p>
-					{/* <button className="button is-primary">View Tickets({user.tickets.length})</button>  */}
-				</div>
+		<div className="card ticket-section has-background-white">
+			<div className="card-content">
+				<h2 className="title">{user.name}</h2>
+				<h3 className="subtitle">Role: {user.role}</h3>
+				<button className="button is-info">
+					<a href={userTicketLink} className="has-text-white">
+						View Tickets ({user.tickets.length})
+					</a>
+				</button>
 			</div>
+
 		</div>
 	)
 }
