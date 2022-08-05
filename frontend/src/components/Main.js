@@ -1,8 +1,9 @@
 import './Main.scss'
 import React from 'react';
 import TicketList from './TicketList';
+import UserList from './UserList';
 import Menu from './Menu';
-
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 
 export default function Main(props) {
 
@@ -15,7 +16,12 @@ export default function Main(props) {
         <Menu />
 			</div>
 			<div className="column data-column">
-				<TicketList/>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<TicketList />} />
+						<Route path="/users" element={<UserList/>} />
+					</Routes>
+				</BrowserRouter>
 			</div>
 		</div>
 	)
