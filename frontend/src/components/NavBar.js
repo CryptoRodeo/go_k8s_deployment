@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './NavBar.scss';
 export default function NavBar(props) {
 	let navburger_classes = `navbar-burger ${props.showMenu ? '' : 'is-active'}`;
@@ -6,7 +6,7 @@ export default function NavBar(props) {
 	return (
 		<nav className="navbar" role="navigation" aria-label="main navigation">
 			<div className="navbar-brand">
-				<a role="button" href="/" className={navburger_classes} onClick={() => props.toggleMenu(!props.showMenu)} aria-label="menu" data-target="#menuSection" data-toggle="menu">
+				<a role="button" className={navburger_classes} onClick={() => props.toggleMenu(!props.showMenu)} aria-label="menu" data-target="#menuSection" data-toggle="menu">
 					<span aria-hidden="false" className="burger-line"></span>
 					<span aria-hidden="false" className="burger-line"></span>
 					<span aria-hidden="false" className="burger-line"></span>
