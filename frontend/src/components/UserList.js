@@ -15,15 +15,15 @@ export default function UserList() {
 		console.error(error)
 	}
 
-	if (!users) {
-		return <div>Loading...</div>
+	if (!users.length) {
+		return (
+			<div className="container user-list">Loading...</div>
+		);
 	}
 
 	return (
-		<div className="container">
-			<div className="users-list">
-				{users.map(user => (<User key={user.id} {...user} />))}
-			</div>
+		<div className="container user-list">
+			{users.map(user => (<User key={user.id} {...user} />))}
 		</div>
 
 	)
