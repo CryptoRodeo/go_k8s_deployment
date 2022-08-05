@@ -7,7 +7,7 @@ export default function User(props) {
 
 	useEffect(() => {
 		setUser(user);
-	}, [props]);
+	}, [user]);
 
 	return (
 		<div className="card ticket-section has-background-white">

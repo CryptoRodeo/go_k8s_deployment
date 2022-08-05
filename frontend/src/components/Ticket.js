@@ -5,7 +5,7 @@ export default function Ticket(props) {
 
 	useEffect(() => {
 		setTicket(ticket);
-	}, [props]);
+	}, [ticket]);
 
 	return (
 		<div className="card ticket-section has-background-white">
