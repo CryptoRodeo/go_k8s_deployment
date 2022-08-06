@@ -1,3 +1,5 @@
+.PHONY: all
+
 all: build_and_publish
 
 build_and_publish:\
