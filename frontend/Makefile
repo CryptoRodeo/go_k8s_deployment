@@ -1,17 +1,19 @@
 .PHONY: all
 
-all: build_and_publish
+image_tag := kilgorevonnegut/microservice_frontend:v1
+name := "TicketMaster frontend"
 
-build_and_publish: \
-	build \
-	publish 
+all: build
 
 build:
 	@echo "------------------------------"
-	@echo "Building front end"
+	@echo "Building ${name}"
 	@echo "------------------------------"
 	npm run build && \
-	docker build . -t kilgorevonnegut/microservice_frontend:v1
+	docker build . -t ${image_tag}
 
 publish:
-	@echo "WIP :)"
+	@echo "------------------------------"
+	@echo "Publishing ${name} to Docker"
+	@echo "------------------------------"
+	docker push ${image_tag}

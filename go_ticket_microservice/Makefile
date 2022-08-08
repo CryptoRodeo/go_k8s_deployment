@@ -1,16 +1,18 @@
 .PHONY: all
 
-all: build_and_publish
+image_tag := kilgorevonnegut/go-ticket-microservice:v1
+name := "Go Ticket Microservice"
 
-build_and_publish:\
-	build \
-	publish
+all: build
 
 build:
 	@echo "------------------------------"
-	@echo "Building go ticket microservice"
+	@echo "Building ${name}"
 	@echo "------------------------------"
-	docker build . -t kilgorevonnegut/go-ticket-microservice:v1
+	docker build . -t ${image_tag}
 
 publish:
-	@echo "WIP :)"
+	@echo "------------------------------"
+	@echo "Publishing ${name} to Docker"
+	@echo "------------------------------"
+	docker push ${image_tag}

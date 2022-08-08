@@ -1,16 +1,18 @@
 .PHONY: all
 
-all: build_and_publish
+image_tag := kilgorevonnegut/go-user-microservice:v1
+name := "Go User Microservice"
 
-build_and_publish: \
-	build \
-	publish
+all: build
 
 build:
 	@echo "------------------------------"
-	@echo "Building go user microservice"
+	@echo "Building ${name}"
 	@echo "------------------------------"
-	docker build . -t kilgorevonnegut/go-user-microservice:v1
+	docker build . -t ${image_tag}
 
 publish:
-	@echo "WIP :)"
+	@echo "------------------------------"
+	@echo "Publishing ${name} to Docker"
+	@echo "------------------------------"
+	docker push ${image_tag}
