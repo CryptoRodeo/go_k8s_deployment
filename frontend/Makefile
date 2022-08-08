@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all build publish
 
 image_tag := kilgorevonnegut/microservice_frontend:v1
 name := "TicketMaster frontend"
