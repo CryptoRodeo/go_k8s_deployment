@@ -9,6 +9,7 @@ build:
 	@echo "------------------------------"
 	@echo "Building ${name}"
 	@echo "------------------------------"
+	npm install && \
 	npm run build && \
 	docker build . -t ${image_tag}
 
