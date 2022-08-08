@@ -7,7 +7,14 @@ pipeline {
 
 	stages {
 		stage("Build") {
-			steps { sh "make" }
+
+			steps {
+				script {
+					env.CI = false //disable unecessary React warnings
+				}
+
+				sh "make"
+				}
 		}
 
 		stage("Test") {
