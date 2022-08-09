@@ -28,8 +28,7 @@ pipeline {
 		stage("Docker push") {
 			//steps { sh "make publish_all" }
 			steps {
-				sh "docker-credential-pass store < ~/login.json"
-				sh "docker login"
+				sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
 				sh "make publish_all"
 			}
 		}
