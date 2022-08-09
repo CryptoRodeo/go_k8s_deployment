@@ -28,7 +28,6 @@ pipeline {
 		stage("Docker push") {
 			//steps { sh "make publish_all" }
 			steps {
-				sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
 				sh "make publish_all"
 			}
 		}
