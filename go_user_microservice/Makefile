@@ -9,7 +9,7 @@ build:
 	@echo "------------------------------"
 	@echo "Building ${name}"
 	@echo "------------------------------"
-	docker build . -t ${image_tag}
+	docker build . -t ${image_tag} --network=host
 
 publish:
 	@echo "------------------------------"
