@@ -22,7 +22,8 @@ pipeline {
 		}
 
 		stage("Docker push") {
-			steps { sh "make publish_all" }
+			//steps { sh "make publish_all" }
+			steps { sh "echo 'WIP :)'" }
 		}
 	}
 }
