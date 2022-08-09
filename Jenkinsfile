@@ -5,7 +5,7 @@ pipeline {
 		pollSCM('* * * * *')
 	}
 
-	environment = {
+	environment {
 		dockerhub=credentials('DockerKey')
 	}
 
