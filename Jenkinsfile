@@ -28,6 +28,8 @@ pipeline {
 		stage("Docker push") {
 			//steps { sh "make publish_all" }
 			steps {
+				sh "docker-credential-pass store < ~/login.json"
+				sh "docker login"
 				sh "make publish_all"
 			}
 		}
