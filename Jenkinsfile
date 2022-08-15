@@ -2,6 +2,7 @@ pipeline {
 	agent any
 
 	triggers {
+    // check repo for changes every minute
 		pollSCM('* * * * *')
 	}
 
@@ -14,7 +15,7 @@ pipeline {
 
 			steps {
 				script {
-					env.CI = false //disable unecessary React warnings
+					env.CI = false //disable unnecessary React warnings
 				}
 
 				sh "make"
@@ -22,11 +23,11 @@ pipeline {
 		}
 
 		stage("Test") {
+      // WIP, still need to add tests.
 			steps { sh "echo 'WIP :)'" }
 		}
 
 		stage("Docker push") {
-			//steps { sh "make publish_all" }
 			steps {
 				sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
 				sh "make publish_all"
