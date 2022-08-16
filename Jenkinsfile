@@ -54,12 +54,8 @@ def SendEmailNotification(String res) {
 
 	// send mail
 	if(to != null && !to.isEmpty()) {
-		emailext(
-			body: content, 
-			mimeType: 'text/html'
-			subject: subject,
-			to: to,
-			attachLog: true
-		)
+        emailext(body: content, mimeType: 'text/html',
+        subject: subject,
+        to: to, attachLog: true )
 	}
 }
