@@ -42,7 +42,7 @@ pipeline {
 	}
 }
 
-def SendEmailNotification(String res) {
+def SendEmailNotification(String result) {
 	// send the email to the one who triggered the build.
 	// creds are the user's jenkins creds
 	def to = emailextrecipients([
