@@ -23,7 +23,7 @@ pipeline {
 		}
 
 		stage("Test") {
-      // WIP, still need to add tests.
+      	// WIP, still need to add tests.
 			steps { sh "echo 'WIP :)'" }
 		}
 
@@ -33,5 +33,33 @@ pipeline {
 				sh "make publish_all"
 			}
 		}
+	}
+
+	post {
+		always {
+			SendEmailNotification(currentBuild.result)
+		}
+	}
+}
+
+def SendEmailNotification(String res) {
+	// send the email to the one who triggered the build.
+	// creds are the user's jenkins creds
+	def to = emailextrecipients([
+		requestor()
+	])
+
+	def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
+	def content = '${JELLY_SCRIPT,template="html"}'
+
+	// send mail
+	if(to != null && !to.isEmpty()) {
+		emailext(
+			body: content, 
+			mimeType: 'text/html'
+			subject: subject,
+			to: to,
+			attachLog: true
+		)
 	}
 }
