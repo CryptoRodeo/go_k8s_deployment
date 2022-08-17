@@ -38,12 +38,13 @@ pipeline {
 
 	post {
 		always {
-			SendEmailNotification(currentBuild.result, env.notificationReceiver_USR)
+			SendEmailNotification(currentBuild.result)
 		}
 	}
 }
 
-def SendEmailNotification(String result, String to) {
+def SendEmailNotification(String result) {
+	def to = "${env.notificationReceiver_USR}"
 	def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
 	def content = '${JELLY_SCRIPT,template="html"}'
 
