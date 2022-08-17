@@ -38,7 +38,7 @@ pipeline {
 
 	post {
 		always {
-			SendEmailNotification(currentBuild.result, $notificationReceiver_USR)
+			SendEmailNotification(currentBuild.result, env.notificationReceiver_USR)
 		}
 	}
 }
