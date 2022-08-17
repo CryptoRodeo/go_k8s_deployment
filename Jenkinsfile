@@ -8,7 +8,7 @@ pipeline {
 
 	environment {
 		dockerhub=credentials('DockerKey')
-		notification_receiver=credentials('JenkinsNotificationReceiver')
+		notificationReceiver=credentials('JenkinsNotificationReceiver')
 	}
 
 	stages {
@@ -38,7 +38,7 @@ pipeline {
 
 	post {
 		always {
-			SendEmailNotification(currentBuild.result, $notification_receiver_USR)
+			SendEmailNotification(currentBuild.result, $notificationReceiver_USR)
 		}
 	}
 }
