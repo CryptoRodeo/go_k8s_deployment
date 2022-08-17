@@ -44,7 +44,7 @@ pipeline {
 }
 
 def SendEmailNotification(String result) {
-	def to = "${env.$notification_receiver_USR}",
+	def to = "${env.$notification_receiver_USR}"
 	def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
 	def content = '${JELLY_SCRIPT,template="html"}'
 
