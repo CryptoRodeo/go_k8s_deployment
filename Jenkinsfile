@@ -44,12 +44,7 @@ pipeline {
 }
 
 def SendEmailNotification(String result) {
-	// send the email to the one who triggered the build.
-	// creds are the user's jenkins creds
-	def to = emailextrecipients([
-		"${env.$notification_receiver_USR}"
-	])
-
+	def to = "${env.$notification_receiver_USR}",
 	def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
 	def content = '${JELLY_SCRIPT,template="html"}'
 
