@@ -5,8 +5,8 @@ WORKDIR /app
 COPY . .
 
 RUN go mod tidy && \
-		go mod download && \
-		go mod verify
+	go mod download && \
+	go mod verify
 
 RUN go build -v -o .
 
