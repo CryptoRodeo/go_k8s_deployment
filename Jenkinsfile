@@ -8,6 +8,7 @@ pipeline {
 
 	environment {
 		dockerhub=credentials('DockerKey')
+		notification_receiver=credentials('JenkinsNotificationReceiver')
 	}
 
 	stages {
@@ -46,7 +47,7 @@ def SendEmailNotification(String result) {
 	// send the email to the one who triggered the build.
 	// creds are the user's jenkins creds
 	def to = emailextrecipients([
-		requestor()
+		$notification_receiver_USR
 	])
 
 	def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
