@@ -5,10 +5,9 @@ metadata:
   labels:
     app: psql-db
 data:
-  POSTGRES_USER: admin
-  POSTGRES_PASSWORD: admin123
+  POSTGRES_USER: pguser
+  POSTGRES_PASSWORD: pgdb123
   POSTGRES_DB: testdb
-
 
 ---
 apiVersion: v1
@@ -24,8 +23,7 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
+  persistentVolumeReclaimPolicy: "Recycle"
   hostPath:
     path: "/mnt/data"
 
@@ -37,7 +35,6 @@ metadata:
   labels:
     app: psql-db
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:
@@ -60,8 +57,8 @@ spec:
     spec:
       containers:
       - name: psql-db
-        image: postgres:12
-        imagePullPolicy: "IfNotPresent"
+        image: postgres:14
+        imagePullPolicy: "Always"
         resources:
           limits:
             memory: "128Mi"
