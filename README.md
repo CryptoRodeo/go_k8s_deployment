@@ -1,3 +1,4 @@
+# Note: WIP 🏗️
 # What is this?
 - An example project involving two Go microservices and a front end consuming their data.
 - Both of these microservices:
