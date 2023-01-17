@@ -1,0 +1,24 @@
+name: ci_workflow
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: build
+        run: make all
+
+      - name: Log into Container Registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+      - name: publish
+        run: make publish
