@@ -1,6 +1,6 @@
 # Note: WIP 🏗️
 
-![workflow](https://github.com/CryptoRodeo/go_k8s_deployment/actions/workflows/workflow.yml/badge.svg)
+![workflow](https://github.com/CryptoRodeo/go_k8s_deployment/actions/workflows/workflow.yaml/badge.svg)
 
 # What is this?
 - An example project involving two Go microservices and a front end consuming their data.
