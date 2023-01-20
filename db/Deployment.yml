@@ -67,8 +67,8 @@ spec:
           - configMapRef:
               name: psql-db-config
         volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: psql-db
+          - mountPath: /mnt/data
+            name: psql-db-data
         ports:
         - containerPort: 5432
       volumes:
